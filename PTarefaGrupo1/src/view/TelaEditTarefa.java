@@ -38,8 +38,6 @@ public class TelaEditTarefa extends javax.swing.JPanel {
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarefa"));
-
         jLabel1.setText("Descrição:");
 
         jLabel2.setText("Prazo:");
