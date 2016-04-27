@@ -66,7 +66,7 @@
                   <Component id="btnAlterarTarefa" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnExcluirTarefa" min="-2" pref="42" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
               <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -133,7 +133,7 @@
         <Component class="javax.swing.JButton" name="btnAddTarefa">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/Create.png"/>
+              <Image iconType="2" name="C:\Users\alexsander_leal\Downloads\Create.png"/>
             </Property>
           </Properties>
           <Events>
@@ -143,14 +143,14 @@
         <Component class="javax.swing.JButton" name="btnAlterarTarefa">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/Modify.png"/>
+              <Image iconType="2" name="C:\Users\alexsander_leal\Downloads\Modify.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnExcluirTarefa">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/Trash.png"/>
+              <Image iconType="2" name="C:\Users\alexsander_leal\Downloads\Trash.png"/>
             </Property>
           </Properties>
         </Component>
@@ -187,10 +187,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnAddExcluirLista" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cbLista" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAddLista" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnAddLista" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbLista" min="-2" max="-2" attributes="0"/>
                       <Component id="btnAddAlterarLista" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -209,21 +207,24 @@
         <Component class="javax.swing.JButton" name="btnAddLista">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/Create.png"/>
+              <Image iconType="2" name="C:\Users\alexsander_leal\Downloads\Create.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddListaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddAlterarLista">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/Modify.png"/>
+              <Image iconType="2" name="C:\Users\alexsander_leal\Downloads\Modify.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddExcluirLista">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/image/Trash.png"/>
+              <Image iconType="2" name="C:\Users\alexsander_leal\Downloads\Trash.png"/>
             </Property>
           </Properties>
         </Component>

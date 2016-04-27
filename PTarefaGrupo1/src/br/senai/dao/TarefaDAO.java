@@ -1,14 +1,13 @@
 package br.senai.dao;
 
-
 import br.senai.entity.Tarefa;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class TarefaDAO {
 
@@ -20,7 +19,7 @@ public class TarefaDAO {
                             + "(descricao, prazo, concluido) "
                             + "VALUES ( ?, ?, ?)");
             ps.setString(1, tarefa.getDescricao());
-            ps.setDate(2, (Date) tarefa.getPrazo());
+            ps.setDate(2, new java.sql.Date(tarefa.getPrazo().getTime()));
             ps.setBoolean(3, tarefa.getConcluido());
 
             ps.execute();
@@ -41,7 +40,7 @@ public class TarefaDAO {
                     + "SET descricao = ?, prazo = ?, concluido = ?"
                     + " WHERE idtarefa= ?");
             ps.setString(1, tarefa.getDescricao());
-            ps.setDate(2, (Date) tarefa.getPrazo());
+            ps.setDate(2, new java.sql.Date(tarefa.getPrazo().getTime()));
             ps.setBoolean(3, tarefa.getConcluido());
 
             ps.execute();
@@ -57,7 +56,7 @@ public class TarefaDAO {
     }
 
     public boolean salvar(Tarefa tarefa) {
-        if (tarefa.getId()== 0) {
+        if (tarefa.getId() == 0) {
             return insert(tarefa);
         } else {
             return update(tarefa);
@@ -98,7 +97,7 @@ public class TarefaDAO {
                 tarefa.setDescricao(rs.getString("descricao"));
                 tarefa.setPrazo(rs.getDate("prazo"));
                 tarefa.setConcluido(rs.getBoolean("concluido"));
-                
+
                 lista.add(tarefa);
             }
             rs.close();

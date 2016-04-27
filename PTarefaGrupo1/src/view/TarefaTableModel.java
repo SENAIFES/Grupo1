@@ -34,7 +34,13 @@ public class TarefaTableModel extends AbstractTableModel {
         } else if (columnIndex == 1) {
             return umaTarefa.getPrazo();
         } else if (columnIndex == 2) {
-            return umaTarefa.getConcluido();
+            String c = "";
+            if (umaTarefa.getConcluido()) {
+                c = "Sim";
+            } else {
+                c = "Não";
+            }
+            return c;
         } else {
             return "";
         }
