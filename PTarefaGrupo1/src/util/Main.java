@@ -7,7 +7,10 @@ package util;
 
 import br.senai.dao.TarefaDAO;
 import br.senai.entity.Tarefa;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +30,19 @@ public class Main {
         for (Tarefa t : lista) {
             System.out.println(t.getDescricao());
         }
-        
+     
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	String dateInString = "7-Jun-2013";
+
+	try {
+
+		Date date = formatter.parse(dateInString);
+		System.out.println(date);
+		System.out.println(formatter.format(date));
+
+	} catch (ParseException e) {
+		e.printStackTrace();
+	}
     }
     
 }
