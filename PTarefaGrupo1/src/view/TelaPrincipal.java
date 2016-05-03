@@ -5,12 +5,15 @@
  */
 package view;
 
+import br.senai.dao.ListaDAO;
 import br.senai.dao.TarefaDAO;
+import br.senai.entity.Lista;
 import br.senai.entity.Tarefa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -20,16 +23,26 @@ import javax.swing.JTable;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     JDialog jDialogEdit = new JDialog();
-    
+    ListaDAO listaDAO = new ListaDAO();
+
     public TelaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
         atualizarTabela();
+
+        List<Lista> listaTarefa = new ArrayList<Lista>();
+        listaTarefa = listaDAO.listarTodos();
+
+        for (Lista lista : listaTarefa) {
+            cbLista.addItem(lista);
+
+        }
+        
     }
 
-        Tarefa tarefa = new Tarefa();
-        
+    Tarefa tarefa = new Tarefa();
+
     private void atualizarTabela() {
         TarefaDAO tarefaDAO = new TarefaDAO();
         TarefaTableModel ttm = new TarefaTableModel();
@@ -130,6 +143,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnAddAlterarLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Modify.png"))); // NOI18N
+        btnAddAlterarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddAlterarListaActionPerformed(evt);
+            }
+        });
 
         btnAddExcluirLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Trash.png"))); // NOI18N
 
@@ -185,23 +203,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddListaActionPerformed
-        // TODO add your handling code here:
+        TelaLista1 tela = new TelaLista1(this, true);
+        // tela.setVisible(true);
     }//GEN-LAST:event_btnAddListaActionPerformed
 
     private void btnAddTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTarefaActionPerformed
         TelaTarefa tela = new TelaTarefa(this, true, new Tarefa());
-        
+
         tela.setVisible(true);
 //        System.out.println("Terminou de executar!");
     }//GEN-LAST:event_btnAddTarefaActionPerformed
 
     private void btnAlterarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarTarefaActionPerformed
-     TelaTarefa tela = new TelaTarefa(this, true, tarefa);
-        
-        tela.setVisible(true);  
-       
-        
+        TelaTarefa tela = new TelaTarefa(this, true, tarefa);
+
+        tela.setVisible(true);
+
+
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
+
+    private void btnAddAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlterarListaActionPerformed
+       TelaLista1 tela = new TelaLista1(this, true);
+       
+    }//GEN-LAST:event_btnAddAlterarListaActionPerformed
 
     /**
      * @param args the command line arguments
