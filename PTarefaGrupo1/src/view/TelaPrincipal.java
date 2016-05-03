@@ -38,10 +38,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             cbLista.addItem(lista);
 
         }
-        
+
     }
 
-    Tarefa tarefa = new Tarefa();
+    private Tarefa tarefa = new Tarefa();
+    private TarefaDAO tarefaDAO = new TarefaDAO();
 
     private void atualizarTabela() {
         TarefaDAO tarefaDAO = new TarefaDAO();
@@ -105,6 +106,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnExcluirTarefa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Trash.png"))); // NOI18N
+        btnExcluirTarefa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirTarefaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,14 +230,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tela.setVisible(true);
         atualizarTabela();
 
-        
-        
+
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
 
     private void btnAddAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlterarListaActionPerformed
-       TelaLista1 tela = new TelaLista1(this, true);
-       
+        TelaLista1 tela = new TelaLista1(this, true);
+
     }//GEN-LAST:event_btnAddAlterarListaActionPerformed
+
+    private void btnExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirTarefaActionPerformed
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir a tarefa?", "Excluir", JOptionPane.YES_NO_OPTION);
+        if (resposta == 0) {
+            TarefaTableModel tarefaTM = (TarefaTableModel) tbTarefa.getModel();
+            tarefa = (Tarefa) tarefaTM.getLista().get(tbTarefa.getSelectedRow());
+            tarefaDAO.delete(tarefa.getId());
+            JOptionPane.showMessageDialog(this, "Excluído com sucesso.");
+            atualizarTabela();
+        }
+
+
+    }//GEN-LAST:event_btnExcluirTarefaActionPerformed
 
     /**
      * @param args the command line arguments
