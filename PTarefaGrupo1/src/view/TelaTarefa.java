@@ -5,8 +5,14 @@
  */
 package view;
 
+import br.senai.dao.TarefaDAO;
 import br.senai.entity.Tarefa;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,21 +26,22 @@ public class TelaTarefa extends javax.swing.JDialog {
     public TelaTarefa(java.awt.Frame parent, boolean modal, Tarefa tarefa) {
         super(parent, modal);
         initComponents();
-        AtualizarDia();
         setLocationRelativeTo(null);
-        
-//        txtPrazo.setText(tarefa.setDate(new java.sql.Date(tarefa.getPrazo().getTime()));
+        this.tarefa = tarefa;
+        txtDescricaoTarefa.setText(tarefa.getDescricao());
+        txtPrazo.setText(sdf.format(tarefa.getPrazo()));
+        cbxConcluido.setSelected(tarefa.getConcluido());
     }
-   private  Date dataatual;
-public void AtualizarDia(){
     
+    public TelaTarefa(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+    }
     
-    dataatual = new Date();
-    cgAno.setValue(dataatual.getYear()+1900);
-    cgMes.setValue(dataatual.getMonth()+1);
-    cgDia.setValue(dataatual.getDate());
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Tarefa tarefa = new Tarefa();
     
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,12 +55,10 @@ public void AtualizarDia(){
         jLabel1 = new javax.swing.JLabel();
         txtDescricaoTarefa = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        cbxFeito = new javax.swing.JCheckBox();
+        cbxConcluido = new javax.swing.JCheckBox();
         btnSalvarTarefa = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        cgDia = new javax.swing.JSpinner();
-        cgMes = new javax.swing.JSpinner();
-        cgAno = new javax.swing.JSpinner();
+        btnVoltar = new javax.swing.JButton();
+        txtPrazo = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -63,7 +68,7 @@ public void AtualizarDia(){
 
         jLabel2.setText("Prazo:");
 
-        cbxFeito.setText("Concluído");
+        cbxConcluido.setText("Concluído");
 
         btnSalvarTarefa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Save.png"))); // NOI18N
         btnSalvarTarefa.addActionListener(new java.awt.event.ActionListener() {
@@ -72,31 +77,18 @@ public void AtualizarDia(){
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Back.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Back.png"))); // NOI18N
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVoltarActionPerformed(evt);
             }
         });
 
-        cgDia.setValue(01);
-        cgDia.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                cgDiaVetoableChange(evt);
-            }
-        });
-
-        cgMes.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                cgDiaVetoableChange(evt);
-            }
-        });
-
-        cgAno.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                cgAnoStateChanged(evt);
-            }
-        });
+        try {
+            txtPrazo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,26 +97,21 @@ public void AtualizarDia(){
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cgDia, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(cgMes, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cgAno, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDescricaoTarefa)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addComponent(btnSalvarTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbxFeito))))
+                            .addComponent(cbxConcluido)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(txtPrazo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,17 +124,13 @@ public void AtualizarDia(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cgDia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cgMes, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cgAno, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxFeito)
+                .addComponent(txtPrazo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(cbxConcluido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalvarTarefa)
-                    .addComponent(jButton1))
+                    .addComponent(btnVoltar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -172,43 +155,34 @@ public void AtualizarDia(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarTarefaActionPerformed
+        
 
-//        tarefa.setDescricao(txtDescricaoTarefa.getText());
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-//        String dateInString = txtPrazo.getText();
-//        //        tarefa.setPrazo(dateInString);  10012000
-//
-//        try {
-//
-//            Date date = formatter.parse(dateInString);
-//            System.out.println(date);
-//            System.out.println(formatter.format(date));
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
+        
+        try {
+            tarefa.setDescricao(txtDescricaoTarefa.getText());
+            tarefa.setPrazo(sdf.parse(txtPrazo.getText()));
+            tarefa.setConcluido(cbxConcluido.isSelected());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Data Inválida!");
+        }
+                
+        TarefaDAO tarefaDAO = new TarefaDAO();
+        tarefaDAO.salvar(tarefa);
+
+        JOptionPane.showMessageDialog(this, "Salvo com sucesso");
+        limparCampos();
+        
     }//GEN-LAST:event_btnSalvarTarefaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void limparCampos() {
+        txtDescricaoTarefa.setText("");
+        txtPrazo.setText("");
+    }
+
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void cgDiaVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_cgDiaVetoableChange
-    int a=(int) cgAno.getValue();
-        System.out.println("entro");
-        if (a<=0) {
-            cgAno.setValue(dataatual.getYear()+1900);
-        }
-    }//GEN-LAST:event_cgDiaVetoableChange
-
-    private void cgAnoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cgAnoStateChanged
-  int a=(int) cgAno.getValue();
-        System.out.println("entro");
-        if (a<=0) {
-            cgAno.setValue(dataatual.getYear()+1900);
-        }
-    }//GEN-LAST:event_cgAnoStateChanged
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,14 +229,12 @@ public void AtualizarDia(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvarTarefa;
-    private javax.swing.JCheckBox cbxFeito;
-    private javax.swing.JSpinner cgAno;
-    private javax.swing.JSpinner cgDia;
-    private javax.swing.JSpinner cgMes;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JCheckBox cbxConcluido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtDescricaoTarefa;
+    private javax.swing.JFormattedTextField txtPrazo;
     // End of variables declaration//GEN-END:variables
 }

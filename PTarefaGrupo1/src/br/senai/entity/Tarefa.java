@@ -10,6 +10,8 @@ public class Tarefa {
     private Boolean concluido;
 
     public Tarefa() {
+        id = 0;
+        concluido = false;
     }
 
     public Tarefa(String descricao, Date prazo, Boolean feito) {

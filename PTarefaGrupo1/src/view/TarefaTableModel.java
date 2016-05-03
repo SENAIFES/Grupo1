@@ -1,6 +1,7 @@
 package view;
 
 import br.senai.entity.Tarefa;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -28,17 +29,16 @@ public class TarefaTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Tarefa umaTarefa = lista.get(rowIndex);
         if (columnIndex == 0) {
             return umaTarefa.getDescricao();
         } else if (columnIndex == 1) {
-            return umaTarefa.getPrazo();
+            return sdf.format(umaTarefa.getPrazo());
         } else if (columnIndex == 2) {
-            String c = "";
+            String c = "Não";
             if (umaTarefa.getConcluido()) {
                 c = "Sim";
-            } else {
-                c = "Não";
             }
             return c;
         } else {

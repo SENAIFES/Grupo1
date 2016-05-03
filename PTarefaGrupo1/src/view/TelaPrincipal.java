@@ -208,18 +208,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddListaActionPerformed
 
     private void btnAddTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTarefaActionPerformed
-        TelaTarefa tela = new TelaTarefa(this, true, new Tarefa());
+        TelaTarefa tela = new TelaTarefa(this, true);
 
         tela.setVisible(true);
-//        System.out.println("Terminou de executar!");
+
+        atualizarTabela();
+
+
     }//GEN-LAST:event_btnAddTarefaActionPerformed
 
     private void btnAlterarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarTarefaActionPerformed
+        TarefaTableModel tarefaTM = (TarefaTableModel) tbTarefa.getModel();
+        tarefa = (Tarefa) tarefaTM.getLista().get(tbTarefa.getSelectedRow());
         TelaTarefa tela = new TelaTarefa(this, true, tarefa);
-
         tela.setVisible(true);
+        atualizarTabela();
 
-
+        
+        
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
 
     private void btnAddAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlterarListaActionPerformed
