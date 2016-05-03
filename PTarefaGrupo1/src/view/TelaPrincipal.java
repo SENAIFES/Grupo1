@@ -20,7 +20,7 @@ import javax.swing.JTable;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     JDialog jDialogEdit = new JDialog();
-    
+
     public TelaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
@@ -28,8 +28,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizarTabela();
     }
 
-        Tarefa tarefa = new Tarefa();
-        
+    Tarefa tarefa = new Tarefa();
+
     private void atualizarTabela() {
         TarefaDAO tarefaDAO = new TarefaDAO();
         TarefaTableModel ttm = new TarefaTableModel();
@@ -189,17 +189,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddListaActionPerformed
 
     private void btnAddTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTarefaActionPerformed
-        TelaTarefa tela = new TelaTarefa(this, true, new Tarefa());
-        
+        TelaTarefa tela = new TelaTarefa(this, true);
+
         tela.setVisible(true);
-//        System.out.println("Terminou de executar!");
+
+        atualizarTabela();
+
+
     }//GEN-LAST:event_btnAddTarefaActionPerformed
 
     private void btnAlterarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarTarefaActionPerformed
-     TelaTarefa tela = new TelaTarefa(this, true, tarefa);
+        TarefaTableModel tarefaTM = (TarefaTableModel) tbTarefa.getModel();
+        tarefa = (Tarefa) tarefaTM.getLista().get(tbTarefa.getSelectedRow());
+        TelaTarefa tela = new TelaTarefa(this, true, tarefa);
+        tela.setVisible(true);
+        atualizarTabela();
+
         
-        tela.setVisible(true);  
-       
         
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
 
