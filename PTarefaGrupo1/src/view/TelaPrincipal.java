@@ -44,10 +44,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private Tarefa tarefa = new Tarefa();
     private TarefaDAO tarefaDAO = new TarefaDAO();
 
+    Lista listaSelecionada = new Lista();
     private void atualizarTabela() {
         TarefaDAO tarefaDAO = new TarefaDAO();
         TarefaTableModel ttm = new TarefaTableModel();
-        ttm.setLista(tarefaDAO.listarTodos());
+        ttm.setLista(tarefaDAO.getTarefasByLista(listaSelecionada));
         tbTarefa.setModel(ttm);
 
     }
@@ -209,7 +210,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddListaActionPerformed
-        TelaLista1 tela = new TelaLista1(this, true);
+        TelaLista tela = new TelaLista(this, true);
         // tela.setVisible(true);
     }//GEN-LAST:event_btnAddListaActionPerformed
 
@@ -234,7 +235,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
 
     private void btnAddAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlterarListaActionPerformed
-        TelaLista1 tela = new TelaLista1(this, true);
+        TelaLista tela = new TelaLista(this, true);
 
     }//GEN-LAST:event_btnAddAlterarListaActionPerformed
 
@@ -243,7 +244,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (resposta == 0) {
             TarefaTableModel tarefaTM = (TarefaTableModel) tbTarefa.getModel();
             tarefa = (Tarefa) tarefaTM.getLista().get(tbTarefa.getSelectedRow());
-            tarefaDAO.delete(tarefa.getId());
+            tarefaDAO.delete(tarefa.getIdTarefa());
             JOptionPane.showMessageDialog(this, "Excluído com sucesso.");
             atualizarTabela();
         }

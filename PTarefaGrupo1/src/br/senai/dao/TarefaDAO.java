@@ -1,5 +1,6 @@
 package br.senai.dao;
 
+import br.senai.entity.Lista;
 import br.senai.entity.Tarefa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,11 +17,12 @@ public class TarefaDAO {
         try {
             PreparedStatement ps
                     = conn.prepareStatement("INSERT INTO tarefa "
-                            + "(descricao, prazo, concluido) "
-                            + "VALUES ( ?, ?, ?)");
+                            + "(descricao, prazo, concluido, idlista) "
+                            + "VALUES ( ?, ?, ?, ?)");
             ps.setString(1, tarefa.getDescricao());
             ps.setDate(2, new java.sql.Date(tarefa.getPrazo().getTime()));
             ps.setBoolean(3, tarefa.getConcluido());
+            ps.setInt(4, tarefa.getLista().getId());
 
             ps.execute();
             ps.close();
@@ -42,7 +44,7 @@ public class TarefaDAO {
             ps.setString(1, tarefa.getDescricao());
             ps.setDate(2, new java.sql.Date(tarefa.getPrazo().getTime()));
             ps.setBoolean(3, tarefa.getConcluido());
-            ps.setInt(4, tarefa.getId());
+            ps.setInt(4, tarefa.getIdTarefa());
 
             ps.execute();
 
@@ -57,7 +59,7 @@ public class TarefaDAO {
     }
 
     public boolean salvar(Tarefa tarefa) {
-        if (tarefa.getId() == 0) {
+        if (tarefa.getIdTarefa() == 0) {
             return insert(tarefa);
         } else {
             return update(tarefa);
@@ -86,6 +88,7 @@ public class TarefaDAO {
 
     public List<Tarefa> listarTodos() {
         List<Tarefa> lista = new ArrayList<Tarefa>();
+        ListaDAO listaDAO = new ListaDAO();
         Connection conn = ConnectionManager.getConnection();
         try {
             PreparedStatement ps
@@ -94,16 +97,18 @@ public class TarefaDAO {
             while (rs.next()) {
 
                 Tarefa tarefa = new Tarefa();
-                tarefa.setId(rs.getInt("idtarefa"));
+                tarefa.setIdTarefa(rs.getInt("idtarefa"));
                 tarefa.setDescricao(rs.getString("descricao"));
                 tarefa.setPrazo(rs.getDate("prazo"));
                 tarefa.setConcluido(rs.getBoolean("concluido"));
-
+                int idLista = rs.getInt("idlista");
+                tarefa.setLista(listaDAO.buscarPorId(idLista));
                 lista.add(tarefa);
             }
             rs.close();
             ps.close();
             conn.close();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -122,7 +127,7 @@ public class TarefaDAO {
             while (rs.next()) {
 
                 Tarefa tarefa = new Tarefa();
-                tarefa.setId(rs.getInt("idtarefa"));
+                tarefa.setIdTarefa(rs.getInt("idtarefa"));
                 tarefa.setDescricao(rs.getString("descricao"));
                 tarefa.setPrazo(rs.getDate("prazo"));
                 tarefa.setConcluido(rs.getBoolean("concluido"));
@@ -138,19 +143,19 @@ public class TarefaDAO {
         return lista;
     }
 
-    public Tarefa buscarPorId(int id) {
+    public Tarefa buscarPorId(int idTarefa) {
         Connection conn = ConnectionManager.getConnection();
         Tarefa tarefa = null;
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT idtarefa, "
                     + "descricao, prazo, concluido "
                     + "FROM tarefa WHERE idtarefa = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, idTarefa);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
                 tarefa = new Tarefa();
-                tarefa.setId(rs.getInt("idtarefa"));
+                tarefa.setIdTarefa(rs.getInt("idtarefa"));
                 tarefa.setDescricao(rs.getString("descricao"));
                 tarefa.setPrazo(rs.getDate("prazo"));
                 tarefa.setConcluido(rs.getBoolean("concluido"));
@@ -166,6 +171,33 @@ public class TarefaDAO {
         return null;
     }
 
-   
+    public List<Tarefa> getTarefasByLista(Lista lista) {
+        List<Tarefa> listaTarefas = new ArrayList<Tarefa>();
+        ListaDAO listaDAO = new ListaDAO();
+        Connection conn = ConnectionManager.getConnection();
+        try {
+            PreparedStatement ps
+                    = conn.prepareStatement("SELECT * FROM tarefa WHERE idlista = ?");
+            ps.setInt(1, lista.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
+                Tarefa tarefa = new Tarefa();
+                tarefa.setIdTarefa(rs.getInt("idtarefa"));
+                tarefa.setDescricao(rs.getString("descricao"));
+                tarefa.setPrazo(rs.getDate("prazo"));
+                tarefa.setConcluido(rs.getBoolean("concluido"));
+                int idLista = rs.getInt("idlista");
+                tarefa.setLista(listaDAO.buscarPorId(idLista));
+                listaTarefas.add(tarefa);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listaTarefas;
+    }
 }

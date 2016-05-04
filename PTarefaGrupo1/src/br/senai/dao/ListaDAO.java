@@ -120,9 +120,9 @@ public class ListaDAO {
 
                 lista.add(listaTarefa);
             }
-            rs.close();
-            ps.close();
-            conn.close();
+//            rs.close();
+//            ps.close();
+//            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

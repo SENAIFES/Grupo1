@@ -4,13 +4,24 @@ import java.util.Date;
 
 public class Tarefa {
 
-    private Integer id;
+    private Integer idTarefa;
     private String descricao;
     private Date prazo;
     private Boolean concluido;
+    private Lista lista;
+
+    public Lista getLista() {
+        return lista;
+    }
+
+    public void setLista(Lista lista) {
+        this.lista = lista;
+    }
+
+
 
     public Tarefa() {
-        id = 0;
+        idTarefa = 0;
         concluido = false;
     }
 
@@ -44,12 +55,12 @@ public class Tarefa {
         this.concluido = concluido;
     }
     
-    public Integer getId() {
-        return id;
+    public Integer getIdTarefa() {
+        return idTarefa;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdTarefa(Integer idTarefa) {
+        this.idTarefa = idTarefa;
     }
 
 }
