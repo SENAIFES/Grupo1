@@ -35,8 +35,9 @@ public class ListaDAO {
         Connection conn = ConnectionManager.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement("UPDATE lista "
-                    + "SET nome = ? WHERE idlista= ?");
+                    + "SET nome = ? WHERE idlista = ?");
             ps.setString(1, listaTarefa.getNome());
+            ps.setInt(2, listaTarefa.getId());
 
             ps.execute();
 

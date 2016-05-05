@@ -3,19 +3,24 @@ package br.senai.entity;
 
 
 public class Lista {
-    private int id;
+    private Integer id;
     private String nome;
+
+    public Integer getId() {
+        return id;
+    }
+    
+     public Lista () {
+        id = 0;
+        
+    }
 
     @Override
     public String toString() {
         return nome;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -26,4 +31,5 @@ public class Lista {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
 }

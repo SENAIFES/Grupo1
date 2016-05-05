@@ -24,13 +24,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     JDialog jDialogEdit = new JDialog();
     ListaDAO listaDAO = new ListaDAO();
+    Lista lista = new Lista();
 
     public TelaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
         atualizarTabela();
+        atualizarLista();
 
+    }
+
+    private void atualizarLista() {
+        cbLista.removeAllItems();
         List<Lista> listaTarefa = new ArrayList<Lista>();
         listaTarefa = listaDAO.listarTodos();
 
@@ -38,17 +44,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             cbLista.addItem(lista);
 
         }
-
     }
-
     private Tarefa tarefa = new Tarefa();
     private TarefaDAO tarefaDAO = new TarefaDAO();
 
-    Lista listaSelecionada = new Lista();
+    //Lista listaSelecionada = new Lista();
+
     private void atualizarTabela() {
         TarefaDAO tarefaDAO = new TarefaDAO();
         TarefaTableModel ttm = new TarefaTableModel();
-        ttm.setLista(tarefaDAO.getTarefasByLista(listaSelecionada));
+        ttm.setLista(tarefaDAO.getTarefasByLista(lista));
         tbTarefa.setModel(ttm);
 
     }
@@ -157,6 +162,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnAddExcluirLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Trash.png"))); // NOI18N
+        btnAddExcluirLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddExcluirListaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,7 +220,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddListaActionPerformed
-        TelaLista tela = new TelaLista(this, true);
+        Lista l = new Lista();
+        TelaLista tela = new TelaLista(this, true, l);
+        atualizarLista();
         // tela.setVisible(true);
     }//GEN-LAST:event_btnAddListaActionPerformed
 
@@ -235,8 +247,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
 
     private void btnAddAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlterarListaActionPerformed
-        TelaLista tela = new TelaLista(this, true);
+        lista = ((Lista) cbLista.getSelectedItem());
 
+        TelaLista tela = new TelaLista(this, true, lista);
+        atualizarLista();
     }//GEN-LAST:event_btnAddAlterarListaActionPerformed
 
     private void btnExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirTarefaActionPerformed
@@ -251,6 +265,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnExcluirTarefaActionPerformed
+
+    private void btnAddExcluirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExcluirListaActionPerformed
+
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir a tarefa?", "Excluir", JOptionPane.YES_NO_OPTION);
+        if (resposta == 0) {
+            lista = ((Lista) cbLista.getSelectedItem());
+            listaDAO.delete(lista.getId());
+            JOptionPane.showMessageDialog(this, "Excluído com sucesso.");
+            atualizarLista();
+        }
+        
+    }//GEN-LAST:event_btnAddExcluirListaActionPerformed
 
     /**
      * @param args the command line arguments

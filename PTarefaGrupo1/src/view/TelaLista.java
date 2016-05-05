@@ -7,6 +7,7 @@ package view;
 
 import br.senai.dao.ListaDAO;
 import br.senai.entity.Lista;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,14 +15,21 @@ import br.senai.entity.Lista;
  */
 public class TelaLista extends javax.swing.JDialog {
 
-    /**
-     * Creates new form TelaLista1
-     */
-    public TelaLista(java.awt.Frame parent, boolean modal) {
+    Lista lista = new Lista();
+
+    public TelaLista(java.awt.Frame parent, boolean modal, Lista lista) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(this);
+        this.lista = lista;
+        txtNome.setText(lista.getNome());
         setVisible(true);
+    }
+
+    public TelaLista(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -112,14 +120,13 @@ public class TelaLista extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Lista lista = new Lista();
-        
+        ListaDAO listaDAO = new ListaDAO();
         lista.setNome(txtNome.getText());
-        
-       ListaDAO listaDAO = new ListaDAO();
+        listaDAO.salvar(lista);
+        dispose();
        
-       listaDAO.salvar(lista);
-       dispose();
+
+        JOptionPane.showMessageDialog(this, "Salvo com sucesso");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -140,16 +147,21 @@ public class TelaLista extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLista.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLista.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLista.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLista.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -157,7 +169,7 @@ public class TelaLista extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaLista dialog = new TelaLista(new javax.swing.JFrame(), true);
+                TelaLista dialog = new TelaLista(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
