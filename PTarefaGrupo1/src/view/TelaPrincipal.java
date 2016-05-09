@@ -30,15 +30,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
-        atualizarTabela();
         atualizarLista();
+        atualizarTabela();
 
     }
 
     private void atualizarLista() {
         cbLista.removeAllItems();
-        List<Lista> listaTarefa = new ArrayList<Lista>();
-        listaTarefa = listaDAO.listarTodos();
+        List<Lista> listaTarefa = listaDAO.listarTodos();
 
         for (Lista lista : listaTarefa) {
             cbLista.addItem(lista);
@@ -49,10 +48,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private TarefaDAO tarefaDAO = new TarefaDAO();
 
     //Lista listaSelecionada = new Lista();
-
     private void atualizarTabela() {
         TarefaDAO tarefaDAO = new TarefaDAO();
         TarefaTableModel ttm = new TarefaTableModel();
+        lista = ((Lista) cbLista.getSelectedItem());
         ttm.setLista(tarefaDAO.getTarefasByLista(lista));
         tbTarefa.setModel(ttm);
 
@@ -147,6 +146,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista"));
 
+        cbLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbListaActionPerformed(evt);
+            }
+        });
+
         btnAddLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Create.png"))); // NOI18N
         btnAddLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,6 +225,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddListaActionPerformed
+
         Lista l = new Lista();
         TelaLista tela = new TelaLista(this, true, l);
         atualizarLista();
@@ -227,7 +233,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddListaActionPerformed
 
     private void btnAddTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTarefaActionPerformed
-        TelaTarefa tela = new TelaTarefa(this, true);
+        lista = ((Lista) cbLista.getSelectedItem());
+        TelaTarefa tela = new TelaTarefa(this, true, lista);
 
         tela.setVisible(true);
 
@@ -239,6 +246,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnAlterarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarTarefaActionPerformed
         TarefaTableModel tarefaTM = (TarefaTableModel) tbTarefa.getModel();
         tarefa = (Tarefa) tarefaTM.getLista().get(tbTarefa.getSelectedRow());
+
         TelaTarefa tela = new TelaTarefa(this, true, tarefa);
         tela.setVisible(true);
         atualizarTabela();
@@ -268,15 +276,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnAddExcluirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExcluirListaActionPerformed
 
-        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir a tarefa?", "Excluir", JOptionPane.YES_NO_OPTION);
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir a lista?\nTodas as tarefas também serão excluídas.", "Excluir", JOptionPane.YES_NO_OPTION);
         if (resposta == 0) {
             lista = ((Lista) cbLista.getSelectedItem());
             listaDAO.delete(lista.getId());
             JOptionPane.showMessageDialog(this, "Excluído com sucesso.");
             atualizarLista();
         }
-        
+
     }//GEN-LAST:event_btnAddExcluirListaActionPerformed
+
+    private void cbListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaActionPerformed
+        if (cbLista.getSelectedIndex() != -1) {
+            atualizarTabela();
+        }
+    }//GEN-LAST:event_cbListaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `dbtarefa`.`tarefa` (
   CONSTRAINT `FK_Lista`
     FOREIGN KEY (`idlista`)
     REFERENCES `dbtarefa`.`lista` (`idlista`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 4

@@ -6,6 +6,7 @@
 package view;
 
 import br.senai.dao.TarefaDAO;
+import br.senai.entity.Lista;
 import br.senai.entity.Tarefa;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,17 +32,21 @@ public class TelaTarefa extends javax.swing.JDialog {
         txtDescricaoTarefa.setText(tarefa.getDescricao());
         txtPrazo.setText(sdf.format(tarefa.getPrazo()));
         cbxConcluido.setSelected(tarefa.getConcluido());
+        lblLista.setText(tarefa.getLista().getNome());
     }
-    
-    public TelaTarefa(java.awt.Frame parent, boolean modal) {
+
+    public TelaTarefa(java.awt.Frame parent, boolean modal, Lista lista) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        this.tarefa.setLista(lista);
+        lblLista.setText(lista.getNome());
     }
-    
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     Tarefa tarefa = new Tarefa();
     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,6 +64,8 @@ public class TelaTarefa extends javax.swing.JDialog {
         btnSalvarTarefa = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         txtPrazo = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        lblLista = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -90,6 +97,10 @@ public class TelaTarefa extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        jLabel3.setText("Lista:");
+
+        lblLista.setText("-");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -111,13 +122,21 @@ public class TelaTarefa extends javax.swing.JDialog {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(txtPrazo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblLista))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescricaoTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,7 +150,7 @@ public class TelaTarefa extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalvarTarefa)
                     .addComponent(btnVoltar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,23 +174,22 @@ public class TelaTarefa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarTarefaActionPerformed
-        
 
-        
         try {
             tarefa.setDescricao(txtDescricaoTarefa.getText());
             tarefa.setPrazo(sdf.parse(txtPrazo.getText()));
             tarefa.setConcluido(cbxConcluido.isSelected());
+            lblLista.setText(tarefa.getLista().getId() + "");
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Data Inválida!");
         }
-                
+
         TarefaDAO tarefaDAO = new TarefaDAO();
         tarefaDAO.salvar(tarefa);
 
         JOptionPane.showMessageDialog(this, "Salvo com sucesso");
         limparCampos();
-        
+
     }//GEN-LAST:event_btnSalvarTarefaActionPerformed
 
     private void limparCampos() {
@@ -233,7 +251,9 @@ public class TelaTarefa extends javax.swing.JDialog {
     private javax.swing.JCheckBox cbxConcluido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblLista;
     private javax.swing.JTextField txtDescricaoTarefa;
     private javax.swing.JFormattedTextField txtPrazo;
     // End of variables declaration//GEN-END:variables

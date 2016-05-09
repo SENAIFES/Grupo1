@@ -123,14 +123,13 @@ public class TelaLista extends javax.swing.JDialog {
         ListaDAO listaDAO = new ListaDAO();
         lista.setNome(txtNome.getText());
         listaDAO.salvar(lista);
-        dispose();
-       
+            
 
         JOptionPane.showMessageDialog(this, "Salvo com sucesso");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        // TODO add your handling code here:
+       dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
