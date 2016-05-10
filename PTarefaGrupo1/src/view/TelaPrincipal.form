@@ -180,9 +180,9 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnAddLista" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnAddAlterarLista" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="btnAlterarLista" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnAddExcluirLista" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="btnExcluirLista" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -192,10 +192,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnAddExcluirLista" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnExcluirLista" min="-2" max="-2" attributes="0"/>
                       <Component id="btnAddLista" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="cbLista" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnAddAlterarLista" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAlterarLista" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -223,24 +223,24 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddListaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnAddAlterarLista">
+        <Component class="javax.swing.JButton" name="btnAlterarLista">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/image/Modify.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddAlterarListaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarListaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnAddExcluirLista">
+        <Component class="javax.swing.JButton" name="btnExcluirLista">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/image/Trash.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddExcluirListaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirListaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

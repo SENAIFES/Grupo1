@@ -123,14 +123,18 @@ public class TelaLista extends javax.swing.JDialog {
         ListaDAO listaDAO = new ListaDAO();
         lista.setNome(txtNome.getText());
         listaDAO.salvar(lista);
-            
 
         JOptionPane.showMessageDialog(this, "Salvo com sucesso");
+        limparCampos();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    public void limparCampos() {
+        txtNome.setText("");
+    }
 
     /**
      * @param args the command line arguments

@@ -38,10 +38,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void atualizarLista() {
         cbLista.removeAllItems();
         List<Lista> listaTarefa = listaDAO.listarTodos();
-
         for (Lista lista : listaTarefa) {
             cbLista.addItem(lista);
+        }
 
+        if (cbLista.getSelectedIndex() == -1) {
+            btnAlterarLista.setEnabled(false);
+            btnExcluirLista.setEnabled(false);
+        } else {
+            btnAlterarLista.setEnabled(true);
+            btnExcluirLista.setEnabled(true);
         }
     }
     private Tarefa tarefa = new Tarefa();
@@ -49,6 +55,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     //Lista listaSelecionada = new Lista();
     private void atualizarTabela() {
+        if (cbLista.getSelectedIndex() == -1) {
+            btnAddTarefa.setEnabled(false);
+            btnAlterarTarefa.setEnabled(false);
+            btnExcluirTarefa.setEnabled(false);
+        } else {
+            btnAddTarefa.setEnabled(true);
+            btnAlterarTarefa.setEnabled(true);
+            btnExcluirTarefa.setEnabled(true);
+        }
+
         TarefaDAO tarefaDAO = new TarefaDAO();
         TarefaTableModel ttm = new TarefaTableModel();
         lista = ((Lista) cbLista.getSelectedItem());
@@ -79,8 +95,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         cbLista = new javax.swing.JComboBox();
         btnAddLista = new javax.swing.JButton();
-        btnAddAlterarLista = new javax.swing.JButton();
-        btnAddExcluirLista = new javax.swing.JButton();
+        btnAlterarLista = new javax.swing.JButton();
+        btnExcluirLista = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lista de Tarefas");
@@ -163,17 +179,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnAddAlterarLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Modify.png"))); // NOI18N
-        btnAddAlterarLista.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterarLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Modify.png"))); // NOI18N
+        btnAlterarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddAlterarListaActionPerformed(evt);
+                btnAlterarListaActionPerformed(evt);
             }
         });
 
-        btnAddExcluirLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Trash.png"))); // NOI18N
-        btnAddExcluirLista.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluirLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Trash.png"))); // NOI18N
+        btnExcluirLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddExcluirListaActionPerformed(evt);
+                btnExcluirListaActionPerformed(evt);
             }
         });
 
@@ -187,9 +203,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAddLista, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAddAlterarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAlterarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddExcluirLista, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExcluirLista, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -197,10 +213,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddExcluirLista)
+                    .addComponent(btnExcluirLista)
                     .addComponent(btnAddLista)
                     .addComponent(cbLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddAlterarLista))
+                    .addComponent(btnAlterarLista))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -258,12 +274,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAlterarTarefaActionPerformed
 
-    private void btnAddAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAlterarListaActionPerformed
+    private void btnAlterarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarListaActionPerformed
         lista = ((Lista) cbLista.getSelectedItem());
 
         TelaLista tela = new TelaLista(this, true, lista);
         atualizarLista();
-    }//GEN-LAST:event_btnAddAlterarListaActionPerformed
+    }//GEN-LAST:event_btnAlterarListaActionPerformed
 
     private void btnExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirTarefaActionPerformed
         int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir a tarefa?", "Excluir", JOptionPane.YES_NO_OPTION);
@@ -278,7 +294,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnExcluirTarefaActionPerformed
 
-    private void btnAddExcluirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExcluirListaActionPerformed
+    private void btnExcluirListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirListaActionPerformed
 
         int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir a lista?\nTodas as tarefas também serão excluídas.", "Excluir", JOptionPane.YES_NO_OPTION);
         if (resposta == 0) {
@@ -288,17 +304,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             atualizarLista();
         }
 
-    }//GEN-LAST:event_btnAddExcluirListaActionPerformed
+    }//GEN-LAST:event_btnExcluirListaActionPerformed
 
     private void cbListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaActionPerformed
         atualizarTabela();
-    
+
     }//GEN-LAST:event_cbListaActionPerformed
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -310,35 +326,23 @@ public static void main(String args[]) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                
-
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaPrincipal.class
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -367,11 +371,11 @@ public static void main(String args[]) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddAlterarLista;
-    private javax.swing.JButton btnAddExcluirLista;
     private javax.swing.JButton btnAddLista;
     private javax.swing.JButton btnAddTarefa;
+    private javax.swing.JButton btnAlterarLista;
     private javax.swing.JButton btnAlterarTarefa;
+    private javax.swing.JButton btnExcluirLista;
     private javax.swing.JButton btnExcluirTarefa;
     private javax.swing.JComboBox cbLista;
     private javax.swing.JPanel jPanel1;
